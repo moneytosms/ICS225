@@ -31,9 +31,15 @@ int countTopSorts(Graph &G, vector<int> &visited) {
     }
   }
 
-  // if no node left → one valid ordering
-  if (!flag)
-    return 1;
+  // ✅ base case
+  if (!flag) {
+    // check if all nodes are used
+    for (int i = 0; i < G.V; i++) {
+      if (!visited[i])
+        return 0; // cycle case
+    }
+    return 1; // valid ordering
+  }
 
   return count;
 }
@@ -57,6 +63,8 @@ int main() {
     G.indegree[v]++;
   }
 
-  cout << countAllTopologicalSorts(G) << '\n';
+  vector<int> visited(V, 0);
+  cout << countTopSorts(G, visited) << '\n';
+
   return 0;
 }
