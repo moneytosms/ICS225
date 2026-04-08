@@ -45,9 +45,15 @@ public:
     // Time Complexity: O(log N)
     // Space Complexity: O(1)
     void insert(int val) {
-        heap.push_back(val);
-        heapify_up(heap.size() - 1);
+        heap.push_back(val); // Add to the end of the array
+        heapify_up(heap.size() - 1); // Restore heap property by bubbling up
     }
+    /*
+    Algorithm / Pseudocode:
+    insert(val):
+      append val to the end of the heap array
+      heapify_up(last_index)
+    */
 
     // Get minimum element
     // Time Complexity: O(1)
@@ -63,10 +69,18 @@ public:
     void extractMin() {
         if (heap.empty()) return;
 
-        heap[0] = heap.back();
-        heap.pop_back();
-        heapify_down(0);
+        heap[0] = heap.back(); // Replace root with the last element
+        heap.pop_back();       // Remove the last element
+        heapify_down(0);       // Restore heap property by bubbling down
     }
+    /*
+    Algorithm / Pseudocode:
+    extractMin():
+      if heap is empty: return
+      replace root element with the last element in the array
+      remove the last element
+      heapify_down(root_index)
+    */
 
     // Print heap
     void print() {

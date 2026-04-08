@@ -25,10 +25,11 @@ public:
 
     if (!root) {
       root = newNode;
-      q.push(root);
+      q.push(root); // maintain order for complete binary tree insertion
       return;
     }
 
+    // the front of the queue is the first node that is missing a child
     Node *temp = q.front();
 
     if (!temp->left) {
@@ -39,11 +40,23 @@ public:
       temp->right = newNode;
       newNode->parent = temp;
       q.push(newNode);
-      q.pop(); // this node now has 2 children
+      q.pop(); // this node now has 2 children, remove from queue
     }
 
-    heapify_up(newNode);
+    heapify_up(newNode); // restore heap property
   }
+  /*
+  Algorithm / Pseudocode:
+  insert(val):
+    create new node
+    if tree is empty, set as root and enqueue it
+    else:
+      get front node from queue (first node missing a child)
+      add new node as its left child (if missing) or right child
+      enqueue new node
+      if front node has both children, dequeue it
+    heapify_up(new node)
+  */
 
   // Time Complexity: O(log N)
   // Space Complexity: O(1)
@@ -102,20 +115,34 @@ public:
         tempQ.push(last->right);
     }
 
-    // Replace root value with last node
+    // Replace root value with last node's value
     root->data = last->data;
 
-    // Remove last node
+    // Remove last node from its parent
     Node *parent = last->parent;
-    if (parent->right == last)
-      parent->right = nullptr;
-    else
-      parent->left = nullptr;
+    if (parent) {
+      if (parent->right == last)
+        parent->right = nullptr;
+      else
+        parent->left = nullptr;
+    } else {
+      root = nullptr; // only one node existed
+    }
 
     delete last;
 
-    heapify_down(root);
+    if (root) heapify_down(root);
   }
+  /*
+  Algorithm / Pseudocode:
+  extractMin():
+    if root is null return
+    traverse tree in level order to find the deepest, rightmost node (last)
+    copy last node's data to root
+    detach last node from its parent
+    delete last node
+    heapify_down(root)
+  */
 
   // Time Complexity: O(N)
   // Space Complexity: O(N)

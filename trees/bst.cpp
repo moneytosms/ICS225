@@ -15,15 +15,26 @@ public:
   // Space Complexity: O(H) for recursion stack
   Node *insert(Node *node, int val) {
     if (node == nullptr) {
-      return new Node(val);
+      return new Node(val); // create new node if empty spot found
     }
     if (val < node->val) {
-      node->left = insert(node->left, val);
+      node->left = insert(node->left, val); // recurse left
     } else {
-      node->right = insert(node->right, val);
+      node->right = insert(node->right, val); // recurse right
     }
     return node;
   }
+  /*
+  Algorithm / Pseudocode:
+  insert(node, val):
+    if node is null:
+      return new Node(val)
+    if val < node.val:
+      node.left = insert(node.left, val)
+    else:
+      node.right = insert(node.right, val)
+    return node
+  */
 
   // Deletes a node from the BST
   // Time Complexity: O(H)
@@ -73,6 +84,23 @@ public:
       // Return updated subtree
       return root;
   }
+  /*
+  Algorithm / Pseudocode:
+  deleteNode(root, key):
+    if root is null: return null
+    if key < root.val: root.left = deleteNode(root.left, key)
+    else if key > root.val: root.right = deleteNode(root.right, key)
+    else: // node found
+      if root.left is null:
+        temp = root.right; delete root; return temp
+      if root.right is null:
+        temp = root.left; delete root; return temp
+      // node has two children
+      succ = min_value_node(root.right)
+      root.val = succ.val
+      root.right = deleteNode(root.right, succ.val)
+    return root
+  */
 
   // Calculates the height of the BST
   // Time Complexity: O(N)

@@ -17,33 +17,49 @@ void dfs(const Graph &G, int u, int parent,
          vector<int> &inPath) {
 
     visited[u] = 1;
-    path.push_back(u);
+    path.push_back(u); // Add current node to path
     inPath[u] = 1;
 
     for (int v : G.adj[u]) {
-        if (v == parent) continue;
+        if (v == parent) continue; // Skip the edge we came from
 
         if (!visited[v]) {
             dfs(G, v, u, visited, path, inPath);
         }
         else if (inPath[v]) {
-            // Cycle found → extract cycle
+            // Cycle found (back edge) → extract cycle from path
             vector<int> cycle;
             auto it = find(path.begin(), path.end(), v);
 
             for (; it != path.end(); ++it)
                 cycle.push_back(*it);
 
-            // Normalize cycle (to avoid duplicates)
+            // Normalize cycle (sort) to avoid duplicates in uniqueCycles set
             vector<int> temp = cycle;
             sort(temp.begin(), temp.end());
             uniqueCycles.insert(temp);
         }
     }
 
+    // Backtrack: remove node from path
     path.pop_back();
     inPath[u] = 0;
 }
+/*
+Algorithm / Pseudocode:
+dfs(G, u, parent, visited, path, inPath):
+  visited[u] = 1
+  add u to path and set inPath[u] = 1
+  for each neighbor v of u:
+    if v == parent: continue
+    if v is unvisited:
+      dfs(G, v, u, visited, path, inPath)
+    else if inPath[v]:
+      extract cycle from path starting at v to current end
+      sort cycle to normalize
+      insert normalized cycle into uniqueCycles
+  remove u from path and set inPath[u] = 0
+*/
 
 int main() {
     ios::sync_with_stdio(false);

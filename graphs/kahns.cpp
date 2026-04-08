@@ -15,6 +15,7 @@ void bfs(Graph &G) {
     queue<int> q;
 
     // Step 1: push all nodes with indegree 0
+    // These nodes have no prerequisites
     for (int i = 0; i < G.V; i++) {
         if (G.indegree[i] == 0) {
             q.push(i);
@@ -26,8 +27,10 @@ void bfs(Graph &G) {
         int v = q.front();
         q.pop();
 
-        G.topsort.push_back(v);  // add here
+        G.topsort.push_back(v);  // Add node to topological order
 
+        // Decrease indegree of adjacent nodes
+        // If a node's indegree becomes 0, all its prerequisites are met
         for (int w : G.adj[v]) {
             G.indegree[w]--;     // always decrement
 
@@ -37,6 +40,21 @@ void bfs(Graph &G) {
         }
     }
 }
+/*
+Algorithm / Pseudocode:
+bfs(G):
+  create queue q
+  for each node i in G:
+    if indegree of i == 0:
+      enqueue i into q
+  while q is not empty:
+    v = dequeue from q
+    add v to topological_sort_list
+    for each neighbor w of v:
+      decrement indegree of w
+      if indegree of w == 0:
+        enqueue w into q
+*/
 
 int main() {
     ios::sync_with_stdio(false);

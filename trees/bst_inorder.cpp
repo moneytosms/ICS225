@@ -15,15 +15,26 @@ public:
   // Space Complexity: O(H) for recursion stack
   Node *insert(Node *node, int val) {
     if (node == nullptr) {
-      return new Node(val);
+      return new Node(val); // spot found, return new node
     }
     if (val < node->val) {
-      node->left = insert(node->left, val);
+      node->left = insert(node->left, val); // recurse left
     } else {
-      node->right = insert(node->right, val);
+      node->right = insert(node->right, val); // recurse right
     }
     return node;
   }
+  /*
+  Algorithm / Pseudocode:
+  insert(node, val):
+    if node is null:
+      return new Node(val)
+    if val < node.val:
+      node.left = insert(node.left, val)
+    else:
+      node.right = insert(node.right, val)
+    return node
+  */
 
   // Iterative inorder traversal
   // Time Complexity: O(N)
@@ -33,18 +44,39 @@ public:
     Node *curr = root;
     vector<int> res;
 
+    // traverse the tree
     while (curr || !st.empty()) {
-      while (curr->left) {
+      // reach the leftmost node of the current node
+      while (curr) {
         st.push(curr);
         curr = curr->left;
       }
+
+      // current must be null at this point
       curr = st.top();
       st.pop();
-      res.push_back(curr->val);
+
+      res.push_back(curr->val); // visit the node
+
+      // visit the right subtree
       curr = curr->right;
     }
     return res;
   }
+  /*
+  Algorithm / Pseudocode:
+  inorder(root):
+    initialize empty stack st and empty list res
+    curr = root
+    while curr is not null or st is not empty:
+      while curr is not null:
+        push curr to st
+        curr = curr.left
+      curr = pop from st
+      add curr.val to res
+      curr = curr.right
+    return res
+  */
 };
 
 int main() {

@@ -115,10 +115,18 @@ public:
   // Time Complexity: O(1) amortized
   // Space Complexity: O(1)
   void insert(int key) {
+    // Create new node and add it to the root list without consolidating
     Node *x = new Node(key);
     insertIntoRootList(x);
     n++;
   }
+  /*
+  Algorithm / Pseudocode:
+  insert(key):
+    x = new Node(key)
+    insertIntoRootList(x)
+    n++
+  */
 
   // FIND-MIN
   // Time Complexity: O(1)
@@ -142,7 +150,7 @@ public:
       return;
     }
 
-    // concatenate root lists
+    // concatenate root lists by splicing the circular doubly linked lists
     Node *a = min;
     Node *b = H2.min;
 
@@ -152,11 +160,22 @@ public:
     a->right = b;
     b->left = a;
 
+    // update min pointer if necessary
     if (b->key < a->key)
       min = b;
 
     n += H2.n;
   }
+  /*
+  Algorithm / Pseudocode:
+  meld(H2):
+    if H2 is empty, return
+    if current heap is empty, adopt H2's min and size
+    else:
+      splice H2's root list into current root list
+      if H2's min is smaller than current min, update min pointer
+      add H2's size to current size
+  */
 
   // EXTRACT-MIN
   // Time Complexity: O(log N) amortized
@@ -166,7 +185,7 @@ public:
     if (!z)
       return -1;
 
-    // add children to root list
+    // add all children of min node to the root list
     if (z->child) {
       Node *x = z->child;
       vector<Node *> children;
@@ -182,20 +201,37 @@ public:
       }
     }
 
-    // remove z from root list
+    // remove z (old min) from root list
     z->left->right = z->right;
     z->right->left = z->left;
 
     if (z == z->right) {
-      min = nullptr;
+      min = nullptr; // Heap is now empty
     } else {
       min = z->right;
-      consolidate();
+      consolidate(); // Combine trees of equal degree
     }
 
     n--;
     return z->key;
   }
+  /*
+  Algorithm / Pseudocode:
+  extractMin():
+    z = min
+    if z is null return -1
+    for each child x of z:
+      add x to root list
+      set parent of x to null
+    remove z from root list
+    if z was the only node in root list:
+      min = null
+    else:
+      min = z.right
+      consolidate()
+    n--
+    return z.key
+  */
 };
 
 int main() {

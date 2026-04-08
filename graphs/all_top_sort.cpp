@@ -15,17 +15,18 @@ int countTopSorts(Graph &G, vector<int> &visited) {
   bool flag = false;
 
   for (int i = 0; i < G.V; i++) {
+    // If node is unvisited and has no incoming edges, it can be placed next
     if (!visited[i] && G.indegree[i] == 0) {
 
-      // choose
+      // choose: Mark as visited and decrement indegree of adjacent nodes
       visited[i] = 1;
       for (int v : G.adj[i])
         G.indegree[v]--;
 
-      // explore
+      // explore: Recursively count valid topological sorts from this state
       count += countTopSorts(G, visited);
 
-      // backtrack
+      // backtrack: Restore visited state and indegrees for other possibilities
       visited[i] = 0;
       for (int v : G.adj[i])
         G.indegree[v]++;
@@ -34,18 +35,36 @@ int countTopSorts(Graph &G, vector<int> &visited) {
     }
   }
 
-  // base case
+  // base case: If no unvisited node with indegree 0 was found
   if (!flag) {
-    // check if all nodes are used
+    // check if all nodes are used to ensure no cycles prevented sorting
     for (int i = 0; i < G.V; i++) {
       if (!visited[i])
         return 0; // cycle case
     }
-    return 1; // valid ordering
+    return 1; // valid ordering found
   }
 
   return count;
 }
+/*
+Algorithm / Pseudocode:
+countTopSorts(G, visited):
+  count = 0
+  flag = false
+  for each node i in G:
+    if i is unvisited and indegree of i is 0:
+      mark i as visited
+      decrement indegree of all neighbors of i
+      count += countTopSorts(G, visited)
+      restore indegree of all neighbors of i
+      mark i as unvisited
+      flag = true
+  if not flag:
+    if any node is unvisited return 0
+    return 1
+  return count
+*/
 
 int main() {
   ios::sync_with_stdio(false);
