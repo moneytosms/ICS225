@@ -22,28 +22,50 @@ public:
     return node;
   }
 
-  Node *deleteNode(Node *node, int val) {
-    if (node == nullptr) {
-      return nullptr;
-    }
-    if (val < node->val) {
-      node->left = deleteNode(node->left, val);
-    } else if (val > node->val) {
-      node->right = deleteNode(node->right, val);
-    } else {
-      if (node->left == nullptr) {
-        return node->right;
-      } else if (node->right == nullptr) {
-        return node->left;
+  Node* deleteNode(Node* root, int key) {
+      // Base case: empty tree
+      if (!root) return nullptr;
+  
+      // Step 1: Search for the node to delete
+      if (key < root->val) {
+          root->left = deleteNode(root->left, key);
       }
-      Node *minNode = node->right;
-      while (minNode->left != nullptr) {
-        minNode = minNode->left;
+      else if (key > root->val) {
+          root->right = deleteNode(root->right, key);
       }
-      node->val = minNode->val;
-      node->right = deleteNode(node->right, minNode->val);
-    }
-    return node;
+      else {
+          // Node found
+  
+          // Case 1: No left child
+          if (!root->left) {
+              Node* temp = root->right;
+              delete root;  // free memory
+              return temp;
+          }
+  
+          // Case 2: No right child
+          if (!root->right) {
+              Node* temp = root->left;
+              delete root;  // free memory
+              return temp;
+          }
+  
+          // Case 3: Two children
+          // Find inorder successor (smallest node in right subtree)
+          Node* succ = root->right;
+          while (succ->left) {
+              succ = succ->left;
+          }
+  
+          // Copy successor value to current node
+          root->val = succ->val;
+  
+          // Delete the successor node from right subtree
+          root->right = deleteNode(root->right, succ->val);
+      }
+  
+      // Return updated subtree
+      return root;
   }
 
   int height(Node *root) {
