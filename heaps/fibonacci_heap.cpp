@@ -103,6 +103,33 @@ private:
     }
   }
 
+  // CONSOLIDATE():
+  //     Create array A[0..D] initialized to NULL
+  
+  //     Let roots = all nodes in root list
+  
+  //     For each node w in roots:
+  //         x = w
+  //         d = x.degree
+  
+  //         while A[d] != NULL:
+  //             y = A[d]
+  
+  //             if x.key > y.key:
+  //                 swap(x, y)
+  
+  //             link y under x
+  //             A[d] = NULL
+  //             d = d + 1
+  
+  //         A[d] = x
+  
+  //     min = NULL
+  
+  //     For each x in A:
+  //         if x != NULL:
+  //             add x to root list
+  //             update min pointer
 public:
   FibHeap() {
     min = nullptr;
