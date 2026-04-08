@@ -11,6 +11,9 @@ struct Graph {
   vector<pair<int, int>> bridges;
 };
 
+// Detects bridges and Strongly Connected Components (SCC) using Tarjan's algorithm
+// Time Complexity: O(V + E)
+// Space Complexity: O(V)
 void tarjan(Graph &G, int u) {
   G.disc[u] = G.low[u] = G.timer++;
   G.st.push(u);

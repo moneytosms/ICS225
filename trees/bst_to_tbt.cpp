@@ -14,6 +14,8 @@ struct Node {
 };
 
 // Insert into BST
+// Time Complexity: O(H) where H is tree height
+// Space Complexity: O(H) for recursion stack
 Node *insert(Node *root, int key) {
   if (!root)
     return new Node(key);
@@ -26,7 +28,9 @@ Node *insert(Node *root, int key) {
   return root;
 }
 
-// Convert to threaded tree
+// Convert BST to threaded binary tree
+// Time Complexity: O(N)
+// Space Complexity: O(H) for recursion stack
 void createThreads(Node *root, Node *&prev) {
   if (!root)
     return;
@@ -51,6 +55,8 @@ void createThreads(Node *root, Node *&prev) {
 }
 
 // Get leftmost node
+// Time Complexity: O(H)
+// Space Complexity: O(1)
 Node *leftMost(Node *node) {
   while (node && !node->lthread)
     node = node->left;
@@ -58,6 +64,8 @@ Node *leftMost(Node *node) {
 }
 
 // Inorder traversal using threads
+// Time Complexity: O(N)
+// Space Complexity: O(1)
 void inorder(Node *root) {
   Node *cur = leftMost(root);
 

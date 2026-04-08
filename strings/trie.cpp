@@ -19,6 +19,9 @@ public:
         root = new TrieNode();
     }
 
+    // Inserts a word into the trie
+    // Time Complexity: O(L) where L is length of word
+    // Space Complexity: O(L)
     void insert(string word) {
         TrieNode* curr = root;
         for (char c : word) {
@@ -30,6 +33,9 @@ public:
         curr->isEnd = true;
     }
 
+    // Searches for a word in the trie
+    // Time Complexity: O(L) where L is length of word
+    // Space Complexity: O(1)
     bool search(string word) {
         TrieNode* curr = root;
         for (char c : word) {

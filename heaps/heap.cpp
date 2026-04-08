@@ -5,6 +5,8 @@ class MinHeap {
     vector<int> heap;
 
     // Heapify up (for insert)
+    // Time Complexity: O(log N)
+    // Space Complexity: O(1)
     void heapify_up(int i) {
         while (i > 0) {
             int parent = (i - 1) / 2;
@@ -16,6 +18,8 @@ class MinHeap {
     }
 
     // Heapify down (for delete)
+    // Time Complexity: O(log N)
+    // Space Complexity: O(1)
     void heapify_down(int i) {
         int n = heap.size();
         while (true) {
@@ -38,18 +42,24 @@ class MinHeap {
 
 public:
     // Insert element
+    // Time Complexity: O(log N)
+    // Space Complexity: O(1)
     void insert(int val) {
         heap.push_back(val);
         heapify_up(heap.size() - 1);
     }
 
     // Get minimum element
+    // Time Complexity: O(1)
+    // Space Complexity: O(1)
     int getMin() {
         if (heap.empty()) return -1;
         return heap[0];
     }
 
     // Remove minimum element
+    // Time Complexity: O(log N)
+    // Space Complexity: O(1)
     void extractMin() {
         if (heap.empty()) return;
 

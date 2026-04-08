@@ -112,6 +112,8 @@ public:
   // makeHeap is just constructor
 
   // INSERT
+  // Time Complexity: O(1) amortized
+  // Space Complexity: O(1)
   void insert(int key) {
     Node *x = new Node(key);
     insertIntoRootList(x);
@@ -119,6 +121,8 @@ public:
   }
 
   // FIND-MIN
+  // Time Complexity: O(1)
+  // Space Complexity: O(1)
   int findMin() {
     if (!min)
       return -1;
@@ -126,6 +130,8 @@ public:
   }
 
   // MELD (UNION)
+  // Time Complexity: O(1)
+  // Space Complexity: O(1)
   void meld(FibHeap &H2) {
     if (!H2.min)
       return;
@@ -153,6 +159,8 @@ public:
   }
 
   // EXTRACT-MIN
+  // Time Complexity: O(log N) amortized
+  // Space Complexity: O(log N) auxillary from consolidate
   int extractMin() {
     Node *z = min;
     if (!z)

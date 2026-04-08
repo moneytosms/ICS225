@@ -10,6 +10,9 @@ struct Node {
 
 class BST {
 public:
+  // Inserts a value into the BST
+  // Time Complexity: O(H) where H is the height of the tree (O(log N) average, O(N) worst)
+  // Space Complexity: O(H) for recursion stack
   Node *insert(Node *node, int val) {
     if (node == nullptr) {
       return new Node(val);
@@ -22,6 +25,9 @@ public:
     return node;
   }
 
+  // Deletes a node from the BST
+  // Time Complexity: O(H)
+  // Space Complexity: O(H) for recursion stack
   Node* deleteNode(Node* root, int key) {
       // Base case: empty tree
       if (!root) return nullptr;
@@ -68,10 +74,16 @@ public:
       return root;
   }
 
+  // Calculates the height of the BST
+  // Time Complexity: O(N)
+  // Space Complexity: O(H) for recursion stack
   int height(Node *root) {
     return 1 + max(height(root->left), height(root->right));
   }
 
+  // Calculates the depth of a given value in the BST
+  // Time Complexity: O(H)
+  // Space Complexity: O(H) for recursion stack
   int depth(Node *node, int val, int d = 0) {
     if (node == nullptr) {
       return -1;

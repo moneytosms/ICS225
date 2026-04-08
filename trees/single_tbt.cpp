@@ -46,6 +46,8 @@ public:
   }
 
   // ── Insert ─────────────────────────────────────────────────────────────────
+  // Time Complexity: O(H) where H is tree height
+  // Space Complexity: O(1)
   Node *insert(Node *root, int key) {
     Node *curr = root;
     Node *parent = nullptr;
@@ -84,6 +86,8 @@ public:
   }
 
   // ── Remove ─────────────────────────────────────────────────────────────────
+  // Time Complexity: O(H)
+  // Space Complexity: O(1)
   //
   // Four structural cases:
   //
@@ -202,7 +206,9 @@ public:
     }
   }
 
-  // ── Inorder traversal  (O(n) time, O(1) extra space) ──────────────────────
+  // ── Inorder traversal ──────────────────────────────────────────────────────
+  // Time Complexity: O(N)
+  // Space Complexity: O(1)
   void inorder(Node *root) {
     Node *curr = leftmost(root);
     while (curr) {
@@ -212,6 +218,8 @@ public:
   }
 
   // ── Search ─────────────────────────────────────────────────────────────────
+  // Time Complexity: O(H)
+  // Space Complexity: O(1)
   Node *search(Node *root, int key) {
     Node *curr = root;
     while (curr) {

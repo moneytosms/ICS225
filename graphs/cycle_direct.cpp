@@ -8,6 +8,9 @@ struct Graph {
   vector<int> visited;
 };
 
+// Detects cycle in a directed graph using Depth-First Search
+// Time Complexity: O(V + E)
+// Space Complexity: O(V)
 bool dfs(Graph &G, int u) {
   G.state[u] = 1;
   for (int v : G.adj[u]) {

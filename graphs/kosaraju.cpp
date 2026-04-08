@@ -9,6 +9,8 @@ struct Graph {
 };
 
 // First DFS (fill stack)
+// Time Complexity: O(V + E)
+// Space Complexity: O(V)
 void dfs1(Graph &G, int u) {
   G.visited[u] = 1;
   for (int v : G.adj[u]) {
@@ -19,6 +21,8 @@ void dfs1(Graph &G, int u) {
 }
 
 // Second DFS (print SCC)
+// Time Complexity: O(V + E)
+// Space Complexity: O(V)
 void dfs2(Graph &G, int u) {
   G.visited[u] = 1;
   cout << u << " ";
@@ -29,6 +33,8 @@ void dfs2(Graph &G, int u) {
 }
 
 // Transpose graph
+// Time Complexity: O(V + E)
+// Space Complexity: O(V + E)
 void buildTranspose(Graph &G) {
   G.transpose.resize(G.V);
   for (int u = 0; u < G.V; u++) {
@@ -38,7 +44,9 @@ void buildTranspose(Graph &G) {
   }
 }
 
-// Kosaraju Algorithm
+// Kosaraju Algorithm to find SCCs
+// Time Complexity: O(V + E)
+// Space Complexity: O(V + E)
 void kosaraju(Graph &G) {
   // Step 1: DFS to fill stack
   for (int i = 0; i < G.V; i++) {

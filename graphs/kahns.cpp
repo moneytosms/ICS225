@@ -8,6 +8,9 @@ struct Graph {
     vector<int> topsort;
 };
 
+// Computes topological sort using Kahn's algorithm
+// Time Complexity: O(V + E)
+// Space Complexity: O(V)
 void bfs(Graph &G) {
     queue<int> q;
 
@@ -23,10 +26,10 @@ void bfs(Graph &G) {
         int v = q.front();
         q.pop();
 
-        G.topsort.push_back(v);  // ✅ add here
+        G.topsort.push_back(v);  // add here
 
         for (int w : G.adj[v]) {
-            G.indegree[w]--;     // ✅ always decrement
+            G.indegree[w]--;     // always decrement
 
             if (G.indegree[w] == 0) {
                 q.push(w);

@@ -6,6 +6,9 @@ struct Graph {
     vector<vector<int>> adj;
 };
 
+// Detects cycle in an undirected graph using Depth-First Search
+// Time Complexity: O(V + E)
+// Space Complexity: O(V)
 bool dfs(const Graph &G, int u, int parent, vector<int> &visited) {
     visited[u] = 1;
 
