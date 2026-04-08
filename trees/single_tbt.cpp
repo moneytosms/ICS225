@@ -52,6 +52,7 @@ public:
     Node *curr = root;
     Node *parent = nullptr;
 
+    // Traverse to find the insertion point
     while (curr) {
       if (key == curr->key)
         return root; // duplicate – silently ignore
@@ -84,6 +85,21 @@ public:
 
     return root;
   }
+  /*
+  Algorithm / Pseudocode:
+  insert(root, key):
+    find parent node where key should be inserted
+    if key == parent.key: return root
+    node = new Node(key)
+    if parent is null: return node
+    if key < parent.key:
+      node.right = parent, node.rightThread = true
+      parent.left = node
+    else:
+      node.right = parent.right, node.rightThread = true
+      parent.right = node, parent.rightThread = false
+    return root
+  */
 
   // ── Remove ─────────────────────────────────────────────────────────────────
   // Time Complexity: O(H)
@@ -205,17 +221,48 @@ public:
       return root;
     }
   }
+  /*
+  Algorithm / Pseudocode:
+  remove(root, key):
+    search for node with key, tracking parent
+    if node has 2 children:
+      find inorder successor
+      copy successor's value to node
+      node = successor, parent = successor's parent
+    if node is a leaf:
+      update parent's pointer (left to null, or right to node.right and thread=true)
+    else if node has only right child:
+      update parent's pointer to node.right
+    else if node has only left child:
+      find rightmost node in left subtree
+      update its right thread to node.right
+      update parent's pointer to node.left
+    delete node
+    return root
+  */
 
   // ── Inorder traversal ──────────────────────────────────────────────────────
   // Time Complexity: O(N)
   // Space Complexity: O(1)
   void inorder(Node *root) {
-    Node *curr = leftmost(root);
+    Node *curr = leftmost(root); // Start at the smallest element
     while (curr) {
       cout << curr->key << " ";
+      // Follow thread to successor, or go to leftmost node in right subtree
       curr = curr->rightThread ? curr->right : leftmost(curr->right);
     }
   }
+  /*
+  Algorithm / Pseudocode:
+  inorder(root):
+    curr = leftmost(root)
+    while curr is not null:
+      print curr.key
+      if curr.rightThread:
+        curr = curr.right
+      else:
+        curr = leftmost(curr.right)
+  */
 
   // ── Search ─────────────────────────────────────────────────────────────────
   // Time Complexity: O(H)

@@ -32,6 +32,7 @@ class SuffixTree {
 
         found = true;
 
+        // If prefix match is partial, split the edge
         if (len < edge.size()) {
           Node *oldChild = p.second;
           string remainingEdge = edge.substr(len);
@@ -44,9 +45,11 @@ class SuffixTree {
 
           curr = newNode;
         } else {
+          // Full edge matched, move to child node
           curr = p.second;
         }
 
+        // Consume the matched part of the suffix
         suffix = suffix.substr(len);
 
         if (suffix.empty())
@@ -55,12 +58,29 @@ class SuffixTree {
         break;
       }
 
+      // If no edges share a prefix, create a new edge
       if (!found) {
         curr->children[suffix] = new Node();
         return;
       }
     }
   }
+  /*
+  Algorithm / Pseudocode:
+  insertSuffix(suffix):
+    curr = root
+    while true:
+      find edge in curr.children sharing prefix with suffix
+      if found:
+        if prefix length < edge length:
+          split edge
+        curr = newly split node or child node
+        suffix = remaining suffix after match
+        if suffix is empty: return
+      else:
+        add new edge with remaining suffix
+        return
+  */
 
 public:
   // Time Complexity: O(N^3) naive construction
@@ -86,10 +106,13 @@ public:
 
         int len = min(edge.size(), pattern.size());
 
+        // Check if the edge matches the pattern prefix
         if (edge.substr(0, len) == pattern.substr(0, len)) {
+          // If the pattern is fully matched within this edge
           if (pattern.size() <= edge.size())
             return true;
 
+          // Consume matched part and move to child
           pattern = pattern.substr(edge.size());
           curr = p.second;
           found = true;
@@ -98,9 +121,23 @@ public:
       }
 
       if (!found)
-        return false;
+        return false; // mismatch
     }
 
     return true;
   }
+  /*
+  Algorithm / Pseudocode:
+  search(pattern):
+    curr = root
+    while pattern is not empty:
+      find edge from curr that matches prefix of pattern
+      if found:
+        if pattern is exhausted within edge: return true
+        pattern = pattern without matched edge
+        curr = child node
+      else:
+        return false
+    return true
+  */
 };

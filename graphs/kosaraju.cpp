@@ -17,6 +17,7 @@ void dfs1(Graph &G, int u) {
     if (!G.visited[v])
       dfs1(G, v);
   }
+  // Push node to stack only after all its descendants are visited
   G.st.push(u);
 }
 
@@ -26,6 +27,7 @@ void dfs1(Graph &G, int u) {
 void dfs2(Graph &G, int u) {
   G.visited[u] = 1;
   cout << u << " ";
+  // Traverse on the transposed graph
   for (int v : G.transpose[u]) {
     if (!G.visited[v])
       dfs2(G, v);
@@ -39,6 +41,7 @@ void buildTranspose(Graph &G) {
   G.transpose.resize(G.V);
   for (int u = 0; u < G.V; u++) {
     for (int v : G.adj[u]) {
+      // Reverse the direction of all edges
       G.transpose[v].push_back(u);
     }
   }
@@ -48,16 +51,16 @@ void buildTranspose(Graph &G) {
 // Time Complexity: O(V + E)
 // Space Complexity: O(V + E)
 void kosaraju(Graph &G) {
-  // Step 1: DFS to fill stack
+  // Step 1: DFS to fill stack based on finishing times
   for (int i = 0; i < G.V; i++) {
     if (!G.visited[i])
       dfs1(G, i);
   }
 
-  // Step 2: Transpose
+  // Step 2: Transpose the graph
   buildTranspose(G);
 
-  // Step 3: DFS on transpose
+  // Step 3: DFS on transpose based on stack ordering
   fill(G.visited.begin(), G.visited.end(), 0);
 
   while (!G.st.empty()) {
@@ -65,11 +68,35 @@ void kosaraju(Graph &G) {
     G.st.pop();
 
     if (!G.visited[u]) {
-      dfs2(G, u);
+      dfs2(G, u); // Collects one Strongly Connected Component
       cout << "\n"; // one SCC
     }
   }
 }
+/*
+Algorithm / Pseudocode:
+dfs1(G, u):
+  mark u as visited
+  for each neighbor v of u:
+    if v is unvisited: dfs1(G, v)
+  push u to stack
+
+dfs2(G, u):
+  mark u as visited
+  print u
+  for each neighbor v of u in transposed graph:
+    if v is unvisited: dfs2(G, v)
+
+kosaraju(G):
+  for each node i:
+    if i is unvisited: dfs1(G, i)
+  transpose graph (reverse all edges)
+  reset visited array
+  while stack is not empty:
+    u = pop from stack
+    if u is unvisited:
+      dfs2(G, u) (this prints an SCC)
+*/
 
 int main() {
   int V, E;

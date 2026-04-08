@@ -10,10 +10,11 @@ struct Graph {
 // Time Complexity: O(V + E)
 // Space Complexity: O(V)
 bool dfs(const Graph &G, int u, int parent, vector<int> &visited) {
-    visited[u] = 1;
+    visited[u] = 1; // Mark current node as visited
 
     for (int v : G.adj[u]) {
         if (!visited[v]) {
+            // Recurse for unvisited neighbors, passing current node as parent
             if (dfs(G, v, u, visited))
                 return true;
         }
@@ -24,6 +25,18 @@ bool dfs(const Graph &G, int u, int parent, vector<int> &visited) {
     }
     return false;
 }
+/*
+Algorithm / Pseudocode:
+dfs(G, u, parent, visited):
+  visited[u] = 1
+  for each neighbor v of u:
+    if v is unvisited:
+      if dfs(G, v, u, visited) returns true:
+        return true
+    else if v is not parent:
+      return true
+  return false
+*/
 
 int main() {
     ios::sync_with_stdio(false);
