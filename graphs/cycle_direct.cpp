@@ -12,20 +12,33 @@ struct Graph {
 // Time Complexity: O(V + E)
 // Space Complexity: O(V)
 bool dfs(Graph &G, int u) {
-  G.state[u] = 1;
+  G.state[u] = 1; // Mark as in-stack (currently visiting)
   for (int v : G.adj[u]) {
-    if (G.state[v] == 0) {
+    if (G.state[v] == 0) { // Unvisited
       if (dfs(G, v))
         return true;
-    } else if (G.state[v] == 1) {
+    } else if (G.state[v] == 1) { // Back edge found (points to a node currently in recursion stack)
       return true;
     }
   }
-  G.state[u] = -1;
+  G.state[u] = -1; // Mark as fully processed
   return false;
 }
+/*
+Algorithm / Pseudocode:
+dfs(G, u):
+  state[u] = 1 (in-stack)
+  for each neighbor v of u:
+    if state[v] == 0:
+      if dfs(G, v) returns true: return true
+    else if state[v] == 1:
+      return true (cycle found)
+  state[u] = -1 (done)
+  return false
+*/
 
 bool hasCycle(Graph &G) {
+  // Check every node since graph might be disconnected
   for (int i = 0; i < G.V; i++) {
     if (G.state[i] == 0) {
       if (dfs(G, i))

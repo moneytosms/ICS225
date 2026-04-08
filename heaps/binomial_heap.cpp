@@ -101,9 +101,16 @@ public:
     // Time Complexity: O(log N)
     // Space Complexity: O(1)
     void insert(int key) {
+        // Create a new binomial tree of degree 0 and union it with the current heap
         Node* temp = new Node(key);
         head = unionHeap(head, temp);
     }
+    /*
+    Algorithm / Pseudocode:
+    insert(key):
+      temp = new Node(key)
+      head = unionHeap(head, temp)
+    */
 
     // Get minimum
     // Time Complexity: O(log N)
@@ -127,6 +134,7 @@ public:
     int extractMin() {
         if (!head) return -1;
 
+        // Find the tree with the minimum root
         Node *minNode = head, *minPrev = nullptr;
         Node *curr = head, *prev = nullptr;
 
@@ -142,13 +150,13 @@ public:
             curr = curr->sibling;
         }
 
-        // Remove minNode
+        // Remove minNode from the root list
         if (minPrev)
             minPrev->sibling = minNode->sibling;
         else
             head = minNode->sibling;
 
-        // Reverse children
+        // Reverse children of minNode to form a new binomial heap
         Node* child = minNode->child;
         Node* rev = nullptr;
 
@@ -160,10 +168,20 @@ public:
             child = next;
         }
 
+        // Union the old heap with the new heap of children
         head = unionHeap(head, rev);
 
         return mn;
     }
+    /*
+    Algorithm / Pseudocode:
+    extractMin():
+      find tree with minimum root in root list
+      remove this tree from root list
+      reverse the linked list of its children to form a new heap
+      union current heap with this new heap
+      return the minimum key
+    */
 
     // Print heap (for debugging)
     void print() {

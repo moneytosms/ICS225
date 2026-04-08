@@ -14,19 +14,23 @@ struct Graph {
 // Time Complexity: O(V + E)
 // Space Complexity: O(V)
 void tarjan(Graph &G, int u) {
+  // Initialize discovery time and low link value
   G.disc[u] = G.low[u] = G.timer++;
   G.st.push(u);
   G.in_stack[u] = true;
 
   for (int v : G.adj[u]) {
     if (G.disc[v] == -1) {
+      // Tree edge: v is unvisited, recurse and update low value
       tarjan(G, v);
       G.low[u] = min(G.low[u], G.low[v]);
     } else if (G.in_stack[v]) {
+      // Back edge: v is in stack, update low value using disc time of v
       G.low[u] = min(G.low[u], G.disc[v]);
     }
   }
 
+  // If node is root of SCC, pop all nodes from stack
   if (G.low[u] == G.disc[u]) {
     cout << "SCC: ";
     while (true) {
@@ -40,6 +44,24 @@ void tarjan(Graph &G, int u) {
     cout << "\n";
   }
 }
+/*
+Algorithm / Pseudocode:
+tarjan(G, u):
+  disc[u] = low[u] = timer++
+  push u to stack, in_stack[u] = true
+  for each neighbor v of u:
+    if v is unvisited:
+      tarjan(G, v)
+      low[u] = min(low[u], low[v])
+    else if in_stack[v]:
+      low[u] = min(low[u], disc[v])
+  if low[u] == disc[u]:
+    do:
+      v = pop from stack
+      in_stack[v] = false
+      print v
+    while v != u
+*/
 
 int main() {
   int V, E;
