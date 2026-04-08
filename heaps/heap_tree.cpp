@@ -18,6 +18,8 @@ class MinHeap {
 public:
   MinHeap() { root = nullptr; }
 
+  // Time Complexity: O(log N)
+  // Space Complexity: O(1)
   void insert(int val) {
     Node *newNode = new Node(val);
 
@@ -43,6 +45,8 @@ public:
     heapify_up(newNode);
   }
 
+  // Time Complexity: O(log N)
+  // Space Complexity: O(1)
   void heapify_up(Node *node) {
     while (node->parent && node->data < node->parent->data) {
       swap(node->data, node->parent->data);
@@ -50,6 +54,8 @@ public:
     }
   }
 
+  // Time Complexity: O(log N)
+  // Space Complexity: O(1)
   void heapify_down(Node *node) {
     while (node) {
       Node *smallest = node;
@@ -68,12 +74,16 @@ public:
     }
   }
 
+  // Time Complexity: O(1)
+  // Space Complexity: O(1)
   int getMin() {
     if (!root)
       return -1;
     return root->data;
   }
 
+  // Time Complexity: O(N) since it finds the last node via level order traversal
+  // Space Complexity: O(N) for queue
   void extractMin() {
     if (!root)
       return;
@@ -107,6 +117,8 @@ public:
     heapify_down(root);
   }
 
+  // Time Complexity: O(N)
+  // Space Complexity: O(N)
   void levelOrder() {
     if (!root)
       return;

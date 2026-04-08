@@ -7,6 +7,9 @@ struct Graph {
   vector<int> indegree;
 };
 
+// Counts all topological sorts using backtracking
+// Time Complexity: O(V!)
+// Space Complexity: O(V)
 int countTopSorts(Graph &G, vector<int> &visited) {
   int count = 0;
   bool flag = false;
@@ -31,7 +34,7 @@ int countTopSorts(Graph &G, vector<int> &visited) {
     }
   }
 
-  // ✅ base case
+  // base case
   if (!flag) {
     // check if all nodes are used
     for (int i = 0; i < G.V; i++) {

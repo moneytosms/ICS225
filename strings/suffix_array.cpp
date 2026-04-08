@@ -2,6 +2,8 @@
 using namespace std;
 
 // Build suffix array (simple version)
+// Time Complexity: O(N^2 log N)
+// Space Complexity: O(N^2)
 vector<int> buildSA(string s) {
     int n = s.size();
     vector<pair<string, int>> suffixes;
@@ -20,6 +22,8 @@ vector<int> buildSA(string s) {
 }
 
 // Compare pattern with suffix
+// Time Complexity: O(M) where M is pattern length
+// Space Complexity: O(1)
 int compare(string &text, int pos, string &pat) {
     int n = text.size(), m = pat.size();
 
@@ -34,6 +38,8 @@ int compare(string &text, int pos, string &pat) {
 }
 
 // Binary search in suffix array
+// Time Complexity: O(M log N)
+// Space Complexity: O(1)
 bool search(string &text, vector<int> &sa, string &pat) {
     int l = 0, r = sa.size() - 1;
 

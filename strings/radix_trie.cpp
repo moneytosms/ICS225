@@ -22,6 +22,9 @@ class RadixTrie {
 public:
   RadixTrie() { root = new RadixNode(); }
 
+  // Inserts a string into the Radix Trie
+  // Time Complexity: O(L) where L is the length of the string
+  // Space Complexity: O(L)
   void insert(string word) {
     RadixNode *curr = root;
 
@@ -72,6 +75,9 @@ public:
     }
   }
 
+  // Searches for a string in the Radix Trie
+  // Time Complexity: O(L) where L is the length of the string
+  // Space Complexity: O(1)
   bool search(string word) {
     RadixNode *curr = root;
 

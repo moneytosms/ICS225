@@ -6,6 +6,9 @@ struct Graph {
   vector<vector<int>> adj;
 };
 
+// Performs Breadth-First Search traversal
+// Time Complexity: O(V + E)
+// Space Complexity: O(V)
 void bfs(Graph &G, int u, vector<int> &visited) {
   queue<int> q;
   q.push(u);

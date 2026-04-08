@@ -98,12 +98,16 @@ public:
     }
 
     // Insert
+    // Time Complexity: O(log N)
+    // Space Complexity: O(1)
     void insert(int key) {
         Node* temp = new Node(key);
         head = unionHeap(head, temp);
     }
 
     // Get minimum
+    // Time Complexity: O(log N)
+    // Space Complexity: O(1)
     int getMin() {
         if (!head) return -1;
 
@@ -118,6 +122,8 @@ public:
     }
 
     // Extract minimum
+    // Time Complexity: O(log N)
+    // Space Complexity: O(1) auxiliary
     int extractMin() {
         if (!head) return -1;
 

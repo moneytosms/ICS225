@@ -15,6 +15,8 @@ class SuffixTree {
     return i;
   }
 
+  // Time Complexity: O(N^2) for inserting all suffixes
+  // Space Complexity: O(N^2)
   void insertSuffix(string suffix) {
     Node *curr = root;
 
@@ -61,6 +63,8 @@ class SuffixTree {
   }
 
 public:
+  // Time Complexity: O(N^3) naive construction
+  // Space Complexity: O(N^2)
   SuffixTree(string text) {
     root = new Node();
 
@@ -69,6 +73,8 @@ public:
     }
   }
 
+  // Time Complexity: O(M) where M is pattern length
+  // Space Complexity: O(1)
   bool search(string pattern) {
     Node *curr = root;
 
